@@ -6,7 +6,9 @@ import { existsSync } from 'fs'
 import { isEqual } from 'lodash'
 
 const twitterClient = new Twitter(Config.twitter)
-const feedUrl = 'http://feeds.feedburner.com/jExam'
+const random = Math.random().toString(36).slice(2, 6)
+//Add random parameter to bust cache
+const feedUrl = `http://feeds.feedburner.com/jExam?${random}`
 
 const handleData = async function (newData) {
   const lastData = await getLastData()
@@ -22,14 +24,13 @@ const handleData = async function (newData) {
 
 const writeToLast = async function (jsonObject) {
   fs.writeJson('last.json', jsonObject)
-    .then(() => console.log('SUCCESS WRITING of ' + JSON.stringify(jsonObject)))
+    .then(() => console.log('SUCCESS WRITING of the new feed'))
     .catch((err) => console.error(`Failed: ${err}`))
 }
 
 const twitterChanges = () => {
   console.log('Results have been updated! Tweeting now')
 
-  const random = Math.random().toString(36).slice(2, 6)
   twitterClient
     .post('statuses/update', {
       status: 'Beep boop, jExam result have been updated! To see what has' +
@@ -44,7 +45,6 @@ const twitterChanges = () => {
         console.log('Tweeted successfully')
       }
     })
-
 }
 
 const getLastData = async () => {
