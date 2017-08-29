@@ -1,0 +1,17 @@
+{
+  "name": "tud-jexam-checker",
+  "version": "0.0.1",
+  "description": "A tool that informs about new jExam results",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "Alexander Lichter <alichter@developmint.de> (https://developmint.de)",
+  "license": "ISC",
+  "dependencies": {
+    "feed-to-json": "^1.0.3",
+    "jquery": "^3.2.1",
+    "twitter": "^1.7.1"
+  }
+}
