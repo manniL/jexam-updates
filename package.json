@@ -11,10 +11,12 @@
   "author": "Alexander Lichter <alichter@developmint.de> (https://developmint.de)",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.16.2",
     "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
-    "feed-to-json": "^1.0.3",
+    "fs-extra": "^4.0.1",
     "jquery": "^3.2.1",
-    "twitter": "^1.7.1"
+    "lodash": "^4.17.4",
+    "twit": "^2.2.9"
   }
 }
