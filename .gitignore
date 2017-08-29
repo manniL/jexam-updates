@@ -35,3 +35,4 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 /config.json
+/last.json
