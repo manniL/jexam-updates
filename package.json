@@ -9,7 +9,7 @@
   },
   "keywords": [],
   "author": "Alexander Lichter <alichter@developmint.de> (https://developmint.de)",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "axios": "^0.16.2",
     "babel-cli": "^6.26.0",
