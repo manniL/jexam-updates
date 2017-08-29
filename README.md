@@ -22,7 +22,8 @@ Okay, you got these? Great, let's continue!
 
 1. Pull the application and switch to the correct branch (mostly `develop`, or `master` if you want to deploy)
 2. Get all dependencies by using `npm install`
-3. Run `npm start` to trigger the script. (Better set up a cronjob that does it)
+3. Enter your twitter app credentials and your API key for [rss2jon](http://rss2json.com/) (don't worry, it's free).
+4. Run `npm start` to trigger the script. (Better set up a cronjob that does it)
 
 ## Deployment
 
