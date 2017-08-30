@@ -4,6 +4,7 @@ import Config from '../config.json'
 import fs from 'fs-extra'
 import { existsSync } from 'fs'
 import { isEqual } from 'lodash'
+import Logger from './Logger'
 
 const twitterClient = new Twitter(Config.twitter)
 const random = Math.random().toString(36).slice(2, 6)
@@ -18,34 +19,31 @@ const handleData = async function (newData) {
       twitterChanges()
     }
   } else {
-    console.log('No changes')
+    Logger.info('No changes detected')
   }
 }
 
 const writeToLast = async function (jsonObject) {
   fs.writeJson('last.json', jsonObject)
-    .then(() => console.log('SUCCESS WRITING of the new feed'))
-    .catch((err) => console.error(`Failed: ${err}`))
+    .then(() => Logger.info('Successful written the new feed', jsonObject))
+    .catch((err) => Logger.error(`Failed while writing new feed: ${err}`))
 }
 
 const twitterChanges = () => {
-  console.log('Results have been updated! Tweeting now')
-  /*
-    twitterClient
-      .post('statuses/update', {
-        status: 'Beep boop, jExam result have been updated! To see what has' +
-        ' been changed, visit https://jexam.inf.tu-dresden.de/ | ' + random
-      })
-      .catch((e) => console.log('Failed with ' + e))
-      .then((resp) => {
-        if (resp.data.errors) {
-          console.log(resp.data.errors)
-          throw new Error('Tweeting failed')
-        } else {
-          console.log('Tweeted successfully')
-        }
-      })
-      */
+  Logger.info('Results have been updated! Tweeting now')
+  twitterClient
+    .post('statuses/update', {
+      status: 'Beep boop, jExam result have been updated! To see what has' +
+      ' been changed, visit https://jexam.inf.tu-dresden.de/ | ' + random
+    })
+    .catch((e) => Logger.error(`Tweeting failed: ${e}`))
+    .then((resp) => {
+      if (resp.data.errors) {
+        Logger.error('Tweeting failed', resp.data.errors)
+      } else {
+        Logger.info('Tweeted successfully')
+      }
+    })
 }
 
 const getLastData = async () => {
@@ -54,16 +52,17 @@ const getLastData = async () => {
   }
   try {
     return fs.readJson('last.json')
-  } catch (e) { console.log(e)}
+  } catch (e) { Logger.error('Failed to read last.json', e)}
 }
 
 async function hereWeGo () {
+  Logger.info('Hey! Let\'s get ready to scan')
   try {
     const data = await Feed.load(feedUrl)
     await handleData(data.items[0])
-  } catch(error){
-    console.log("Received error!", error)
+  } catch (error) {
+    Logger.error('Something unexpected happened!', error)
   }
 }
 
-hereWeGo().then(() => console.log('Done checking'))
+hereWeGo().then(() => Logger.info('Done!'))

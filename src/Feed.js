@@ -1,4 +1,5 @@
 import Config from '../config.json'
+import Logger from "./Logger"
 import axios from 'axios'
 
 export default class Feed {
@@ -8,7 +9,7 @@ export default class Feed {
       const response = await axios.get('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feedURL) + '&api_key=' + apiKey)
       return response.data
     } catch (error) {
-      console.log('Error while getting feed', error)
+      Logger.error('Error while getting feed', error)
     }
   }
 }
