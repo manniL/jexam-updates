@@ -8,7 +8,7 @@ export default class Feed {
       const response = await axios.get('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feedURL) + '&api_key=' + apiKey)
       return response.data
     } catch (error) {
-      throw new Error(error)
+      console.log('Error while getting feed', error)
     }
   }
 }

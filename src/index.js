@@ -30,21 +30,22 @@ const writeToLast = async function (jsonObject) {
 
 const twitterChanges = () => {
   console.log('Results have been updated! Tweeting now')
-
-  twitterClient
-    .post('statuses/update', {
-      status: 'Beep boop, jExam result have been updated! To see what has' +
-      ' been changed, visit https://jexam.inf.tu-dresden.de/ | ' + random
-    })
-    .catch((e) => console.log('Failed with ' + e))
-    .then((resp) => {
-      if (resp.data.errors) {
-        console.log(resp.data.errors)
-        throw new Error('Tweeting failed')
-      } else {
-        console.log('Tweeted successfully')
-      }
-    })
+  /*
+    twitterClient
+      .post('statuses/update', {
+        status: 'Beep boop, jExam result have been updated! To see what has' +
+        ' been changed, visit https://jexam.inf.tu-dresden.de/ | ' + random
+      })
+      .catch((e) => console.log('Failed with ' + e))
+      .then((resp) => {
+        if (resp.data.errors) {
+          console.log(resp.data.errors)
+          throw new Error('Tweeting failed')
+        } else {
+          console.log('Tweeted successfully')
+        }
+      })
+      */
 }
 
 const getLastData = async () => {
@@ -57,8 +58,12 @@ const getLastData = async () => {
 }
 
 async function hereWeGo () {
-  const data = (await Feed.load(feedUrl)).items[0]
-  await handleData(data)
+  try {
+    const data = await Feed.load(feedUrl)
+    await handleData(data.items[0])
+  } catch(error){
+    console.log("Received error!", error)
+  }
 }
 
 hereWeGo().then(() => console.log('Done checking'))
