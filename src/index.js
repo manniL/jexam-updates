@@ -44,6 +44,7 @@ const twitterChanges = () => {
         Logger.info('Tweeted successfully')
       }
     })
+
 }
 
 const getLastData = async () => {
@@ -59,7 +60,7 @@ async function hereWeGo () {
   Logger.info('Hey! Let\'s get ready to scan')
   try {
     const data = await Feed.load(feedUrl)
-    await handleData(data.items[0])
+    await handleData(data[0]) // Only take the first time
   } catch (error) {
     Logger.error('Something unexpected happened!', error)
   }

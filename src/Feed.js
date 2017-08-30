@@ -1,13 +1,16 @@
-import Config from '../config.json'
-import Logger from "./Logger"
-import axios from 'axios'
+import Logger from './Logger'
+import feedparser from 'feedparser-promised'
 
 export default class Feed {
   static async load (feedURL) {
-    const apiKey = Config.rss2json
+    const options = {
+      uri: feedURL,
+      timeout: 3000,
+      gzip: true,
+      // ...
+    }
     try {
-      const response = await axios.get('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feedURL) + '&api_key=' + apiKey)
-      return response.data
+      return feedparser.parse(options)
     } catch (error) {
       Logger.error('Error while getting feed', error)
     }
