@@ -7,13 +7,11 @@ import { isEqual } from 'lodash'
 import Logger from './Logger'
 
 const twitterClient = new Twitter(Config.twitter)
-const random = Math.random().toString(36).slice(2, 6)
-//Add random parameter to bust cache
-const feedUrl = `http://feeds.feedburner.com/jExam?${random}`
+const feedUrl = `http://feeds.feedburner.com/jExam?`
 
 const handleData = async function (newData) {
   const lastData = await getLastData()
-  if (!isEqual(lastData, newData)) {
+  if (!isEqual(lastData.content, newData.content)) {
     await writeToLast(newData) //Don't wait for write op here
     if (newData.title.includes('Prüfungsergebnisse')) {
       twitterChanges()
@@ -31,6 +29,7 @@ const writeToLast = async function (jsonObject) {
 
 const twitterChanges = () => {
   Logger.info('Results have been updated! Tweeting now')
+  const random = Math.random().toString(36).slice(2, 6)
   twitterClient
     .post('statuses/update', {
       status: 'Beep boop, jExam result have been updated! To see what has' +
