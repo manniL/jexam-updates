@@ -1,6 +1,6 @@
 {
   "name": "jexam-updates",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A tool that informs about new jExam results",
   "main": "./dist/index.js",
   "scripts": {
