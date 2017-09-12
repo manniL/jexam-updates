@@ -5,7 +5,8 @@
   "main": "./dist/index.js",
   "scripts": {
     "build": "rm -rf dist/ && babel ./src -d ./dist",
-    "start": "npm run build && node dist/index.js"
+    "dev": "npm run build && NODE_ENV=local node dist/index.js",
+    "start": "npm run build && NODE_ENV=production node dist/index.js"
   },
   "keywords": [],
   "author": "Alexander Lichter <alichter@developmint.de> (https://developmint.de)",
