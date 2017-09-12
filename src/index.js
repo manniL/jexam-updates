@@ -11,7 +11,6 @@ const feedUrl = `http://feeds.feedburner.com/jExam?`
 
 const handleData = async function (newData) {
   const lastData = await getLastData()
-  console.log(lastData.description, newData.description)
   if (!isEqual(lastData.description, newData.description)) {
     await writeToLast(newData) //Don't wait for write op here
     if (newData.title.includes('Prüfungsergebnisse')) {
