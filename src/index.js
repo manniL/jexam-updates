@@ -11,7 +11,8 @@ const feedUrl = `http://feeds.feedburner.com/jExam?`
 
 const handleData = async function (newData) {
   const lastData = await getLastData()
-  if (!isEqual(lastData.content, newData.content)) {
+  console.log(lastData.description, newData.description)
+  if (!isEqual(lastData.description, newData.description)) {
     await writeToLast(newData) //Don't wait for write op here
     if (newData.title.includes('Prüfungsergebnisse')) {
       twitterChanges()
@@ -28,22 +29,26 @@ const writeToLast = async function (jsonObject) {
 }
 
 const twitterChanges = () => {
-  Logger.info('Results have been updated! Tweeting now')
   const random = Math.random().toString(36).slice(2, 6)
-  twitterClient
-    .post('statuses/update', {
-      status: 'Beep boop, jExam result have been updated! To see what has' +
-      ' been changed, visit https://jexam.inf.tu-dresden.de/ | ' + random
-    })
-    .catch((e) => Logger.error(`Tweeting failed: ${e}`))
-    .then((resp) => {
-      if (resp.data.errors) {
-        Logger.error('Tweeting failed', resp.data.errors)
-      } else {
-        Logger.info('Tweeted successfully')
-      }
-    })
-
+  if (process.env.NODE_ENV === 'production') {
+    Logger.info('Results have been updated! Tweeting now')
+    twitterClient
+      .post('statuses/update', {
+        status: 'Beep boop, jExam result have been updated! To see what has' +
+        ' been changed, visit https://jexam.inf.tu-dresden.de/ | ' + random
+      })
+      .catch((e) => Logger.error(`Tweeting failed: ${e}`))
+      .then((resp) => {
+        if (resp.data.errors) {
+          Logger.error('Tweeting failed', resp.data.errors)
+        } else {
+          Logger.info('Tweeted successfully')
+        }
+      })
+  } else {
+    Logger.info('Results have been updated! Tweeting not because I am not in' +
+      ' production mode')
+  }
 }
 
 const getLastData = async () => {
