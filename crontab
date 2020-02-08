@@ -1,0 +1,1 @@
+*/5 * * * * root /usr/local/bin/node /app/dist/index.js >> /var/log/cron.log 2>&1

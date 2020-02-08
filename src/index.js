@@ -27,9 +27,9 @@ const handleData = async function (newData) {
 const writeToLast = async function (jsonObject) {
   try {
     await fs.writeJson('last.json', jsonObject)
-    Logger.info('Successful written the new feed', jsonObject)
+    Logger.info('Successful saved the new feed')
   } catch (error) {
-    Logger.error(`Failed while writing new feed: ${error}`)
+    Logger.error(`Failed while saving new feed: ${error}`)
   }
 }
 
