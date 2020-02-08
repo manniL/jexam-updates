@@ -19,9 +19,11 @@ const handleData = async function (newData) {
 
   writeToLast(newData)
 
-  if (newData.title.includes('Prüfungsergebnisse')) {
-    twitterChanges()
+  if (!newData.title.includes('Prüfungsergebnisse')) {
+    Logger.info('Changes detected but unrelated to exam results')
+    return
   }
+  twitterChanges()
 }
 
 const writeToLast = async function (jsonObject) {
