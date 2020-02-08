@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rm -rf dist/ && babel ./src -d ./dist",
     "dev": "yarn build && NODE_ENV=local node dist/index.js",
-    "start": "NODE_ENV=local node dist/index.js"
+    "start": "NODE_ENV=production node dist/index.js"
   },
   "keywords": [],
   "author": "Alexander Lichter <npm@lichter.io>",

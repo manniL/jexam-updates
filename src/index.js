@@ -12,6 +12,12 @@ const feedUrl = 'http://feeds.feedburner.com/jExam?'
 const handleData = async function (newData) {
   const lastData = await getLastData()
 
+  const hasNoLastData = lastData === false
+  if(hasNoLastData) {
+    writeToLast(newData)
+    return
+  }
+
   if (isEqual(lastData.description, newData.description)) {
     Logger.info('No changes detected')
     return
@@ -57,14 +63,18 @@ const twitterChanges = async () => {
   }
 }
 
+const hasLastData = () => existsSync('last.json')
+
 const getLastData = async () => {
-  if (!existsSync('last.json')) {
-    await writeToLast({})
+  if (!hasLastData()) {
+    return false
   }
+
   try {
     return fs.readJson('last.json')
   } catch (e) {
     Logger.error('Failed to read last.json', e)
+    return {}
   }
 }
 
