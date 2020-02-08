@@ -36,3 +36,5 @@ crashlytics-build.properties
 fabric.properties
 /config.json
 /last.json
+dist
+node_modules
