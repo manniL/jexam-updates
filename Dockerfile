@@ -23,4 +23,4 @@ RUN chmod +x /etc/cron.d/start-jexam-check
 RUN touch /var/log/cron.log
 
 # Run the command on container startup
-RUN cron && tail -f /var/log/cron.log
+CMD cron && tail -f /var/log/cron.log
