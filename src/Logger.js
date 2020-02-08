@@ -1,7 +1,6 @@
 import winston from 'winston'
 import moment from 'moment'
 
-//Init logger
 export default new (winston.Logger)({
   transports: [
     new (winston.transports.Console)({

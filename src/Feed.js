@@ -6,8 +6,7 @@ export default class Feed {
     const options = {
       uri: feedURL,
       timeout: 3000,
-      gzip: true,
-      // ...
+      gzip: true
     }
     try {
       return feedparser.parse(options)
