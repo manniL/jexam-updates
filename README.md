@@ -13,21 +13,31 @@ See deployment for notes on how to deploy the project on a live system.
 
 To install the tool on your machine, you'll need:
 
-* [NodeJS and NPM](https://nodejs.org/)
+* [NodeJS and Yarn](https://nodejs.org/)
 * A cronjob to trigger it (no automated monitoring on purpose)
+
+
+* **or** Docker to use the included dockerfile which already includes Node, Yarn and a cronjob
 
 Okay, you got these? Great, let's continue!
 
 ### Installing
 
+#### Without docker
+
 1. Pull the application and switch to the correct branch (mostly `develop`, or `master` if you want to deploy)
-2. Get all dependencies by using `npm install`
-3. Copy the config.example.json file and enter your twitter app credentials and your API key for [rss2jon](http://rss2json.com/) (don't worry, it's free).
-4. Run `npm start` to trigger the script. (Better set up a cronjob that does it)
+2. Get all dependencies by using `yarn`
+3. Copy the config.example.json file and enter your twitter app credentials.
+4. Run `yarn start` to trigger the script. (Better set up a cronjob that does it every x minutes)
+
+#### With docker
+
+1. Create a config.json (copy the config.example.json first and add your twitter app credentials).
+2. Build an image from the Dockerfile and start a container based on it
 
 ## Deployment
 
-Deployment works similar to installation. Just go for `master` instead of `develop` and use `npm run production`
+Deployment works similar to installation. Just go for `master` instead of `develop`.
 
 ## Possible errors and there solutions
 
@@ -35,7 +45,7 @@ None known by now
 
 ## Built With
 
-* [NodeJS and NPM](https://nodejs.org/) - Backend javascript and dependency
+* [NodeJS and Yarn](https://nodejs.org/) - Backend javascript and dependency
 management
 * [Twit](https://github.com/ttezel/twit) - Great (promise-based) Twitter API
 
