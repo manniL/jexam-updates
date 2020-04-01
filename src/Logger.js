@@ -1,18 +1,15 @@
-import winston from 'winston'
-import moment from 'moment'
+import { createLogger, format, transports } from 'winston'
 
-export default winston.createLogger({
-  transports: [
-    new (winston.transports.Console)({
-      timestamp () {
-        return moment().format('YYYY-MM-DD HH:mm:ss')
+const { combine, timestamp, printf } = format
 
-      },
-      formatter (options) {
-        const msg = options.message || ''
-        const meta = options.meta && Object.keys(options.meta).length ? '\n\t' + JSON.stringify(options.meta) : ''
-        return `[${options.timestamp()}] ${options.level.toUpperCase()}: ${msg} ${meta}`
-      }
-    })
-  ]
+const myFormat = printf(({ level, message, timestamp }) => {
+  return `[${timestamp}] ${level}: ${message}`
+})
+
+export default createLogger({
+  format: combine(
+    timestamp(),
+    myFormat
+  ),
+  transports: [new transports.Console()]
 })
